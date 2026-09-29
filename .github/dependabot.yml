@@ -1,0 +1,8 @@
+# Dependabot for the canary rotator Actions pins.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
