@@ -25,7 +25,18 @@ Canary events are tagged `note: "canary"` in Refledger's
 `population/watched.jsonl` and must never be counted as ecosystem movement on
 the public site.
 
-## Patterns (rotated by the scheduled workflow)
+## Trigger
+
+Rotations are driven by the external Cloudflare Worker `refledger-clock` in
+the Refledger repo (`clock/`). That Worker fires `workflow_dispatch` for
+`.github/workflows/canary.yml` on `main` on cron `17 */4 * * *` (minute 17
+of every fourth hour). There is no Actions `schedule:` trigger on this
+workflow: GitHub's scheduler was unreliable for this repo, and keeping both
+would double or stagger rotations.
+
+Manual runs remain available via Actions → canary-rotate → Run workflow.
+
+## Patterns (rotated by the clock-driven workflow)
 
 1. FloatingMajor forward (`v1` → newer commit, ahead)
 2. Exact ContentChange (`v1.0.0` → different tree)

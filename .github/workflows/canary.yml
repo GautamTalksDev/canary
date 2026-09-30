@@ -4,12 +4,13 @@
 # performed_at is stamped AFTER git push returns (finalize-ledger.sh), not when
 # the cron fires; scheduled workflows start late under load, and we'd otherwise
 # be timing GitHub's queue rather than detection.
+#
+# Triggered by refledger-clock (Cloudflare Worker) via workflow_dispatch every
+# 4 hours at minute 17. No Actions `schedule:` here: that scheduler was
+# unreliable and would double-fire once the external clock is live.
 name: canary-rotate
 
 on:
-  schedule:
-    # Six patterns; one every 4 hours → full cycle per day.
-    - cron: "17 */4 * * *"
   workflow_dispatch:
     inputs:
       force_pattern:
