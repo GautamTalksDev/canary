@@ -41,9 +41,15 @@ Manual runs remain available via Actions → canary-rotate → Run workflow.
 1. FloatingMajor forward (`v1` → newer commit, ahead)
 2. Exact ContentChange (`v1.0.0` → different tree)
 3. CommitMetadataOnly (same tree, amended commit)
-4. lightweight → annotated and back
-5. delete, then recreate at a different commit after ~15 min
-6. batch: 3 Exact tags moved to one commit
+4. lightweight → annotated (`v2`, left annotated until the next rotation)
+5. annotated → lightweight (`v2`, next rotation)
+6. delete (`v3.0.0`, left missing until the next rotation)
+7. recreate (`v3.0.0`, next rotation)
+8. batch: 3 Exact tags moved to one commit
+
+Every pattern moves **pre-existing** tags created once at bootstrap. Creating
+a tag is not a move and is not scored as a miss. Patterns 4–7 are split so
+each intermediate state survives at least one 5-minute poll.
 
 Each action appends `{pattern, tag, from, to, performed_at}` to
 `canary/ledger.jsonl` in this repository.

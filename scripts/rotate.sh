@@ -3,6 +3,10 @@
 # staged without performed_at — the workflow stamps that after git push returns
 # so we time detection against the push, not GitHub Actions queue delay.
 #
+# Patterns act only on PRE-EXISTING tags (created once by bootstrap_tags).
+# Patterns 3 and 4 are split across rotations so each intermediate state
+# survives at least one poll interval.
+#
 # On any failure: do not advance .canary-state, and clear .canary-pending.jsonl
 # so a partial ledger row cannot be finalized.
 set -euo pipefail
@@ -11,8 +15,6 @@ cd "$(dirname "$0")/.."
 LEDGER=canary/ledger.jsonl
 PENDING=.canary-pending.jsonl
 STATE=.canary-state
-# delete_recreate waits so the poller can observe a missing tag. Tests set 0.
-DELETE_SLEEP="${CANARY_DELETE_SLEEP:-5}"
 
 mkdir -p canary
 touch "$LEDGER"
@@ -23,8 +25,10 @@ PATTERNS=(
   floating_major_forward
   exact_content_change
   commit_metadata_only
-  lightweight_annotated_roundtrip
-  delete_recreate
+  lightweight_to_annotated
+  annotated_to_lightweight
+  delete
+  recreate
   batch_exact_to_one
 )
 
@@ -51,7 +55,6 @@ ensure_blob() {
   mkdir -p "$(dirname "$path")"
   printf '%s\n' "$content" >"$path"
   git add "$path"
-  # First materialization may be a no-op if the blob already matches.
   git commit -m "canary: material $path" >/dev/null 2>&1 || true
 }
 
@@ -80,6 +83,35 @@ is_annotated_tag() {
   [[ "$type" == "tag" ]]
 }
 
+require_tag() {
+  local tag="$1"
+  if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null 2>&1; then
+    echo "missing pre-existing tag ${tag}; run scripts/bootstrap-tags.sh first" >&2
+    exit 1
+  fi
+}
+
+# Create the stable tag set once. Patterns never create these.
+# Only runs when v1 is missing (first materialization). Must not recreate
+# v3.0.0 after a deliberate delete half.
+bootstrap_tags() {
+  local c
+  if git rev-parse -q --verify refs/tags/v1 >/dev/null 2>&1; then
+    return 0
+  fi
+  c="$(make_commit "canary bootstrap" "bootstrap-${RANDOM}")"
+  git tag -f v1 "$c"
+  git tag -f v1.0.0 "$c"
+  git tag -f v1.0.1 "$c"
+  delete_tag v2
+  git tag v2 "$c"
+  git tag -f v3.0.0 "$c"
+  git tag -f v9.0.0 "$c"
+  git tag -f v9.0.1 "$c"
+  git tag -f v9.0.2 "$c"
+  echo "bootstrapped pre-existing canary tags at ${c}"
+}
+
 current() {
   local idx
   idx="$(cat "$STATE")"
@@ -97,45 +129,44 @@ current() {
   echo "$idx"
 }
 
+bootstrap_tags
+
 idx="$(current)"
 pattern="${PATTERNS[$idx]}"
 echo "pattern=${pattern} idx=${idx}"
 
 case "$pattern" in
   floating_major_forward)
-    tree_a="$(make_commit "canary tree A" "tree-a-${RANDOM}")"
-    git tag -f v1 "$tree_a"
-    from=$tree_a
+    require_tag v1
+    from="$(git rev-parse refs/tags/v1)"
     tree_b="$(make_commit "canary tree B ahead" "tree-b-${RANDOM}")"
     git tag -f v1 "$tree_b"
     stage_action "$pattern" "v1" "$from" "$tree_b"
     ;;
   exact_content_change)
-    c1="$(make_commit "exact before" "exact-before-${RANDOM}")"
-    git tag -f v1.0.0 "$c1"
+    require_tag v1.0.0
+    from="$(git rev-parse refs/tags/v1.0.0)"
     c2="$(make_commit "exact after" "exact-after-${RANDOM}")"
     git tag -f v1.0.0 "$c2"
-    stage_action "$pattern" "v1.0.0" "$c1" "$c2"
+    stage_action "$pattern" "v1.0.0" "$from" "$c2"
     ;;
   commit_metadata_only)
-    base="$(make_commit "meta base" "same-tree-content")"
-    tree="$(git rev-parse 'HEAD^{tree}')"
-    new="$(git commit-tree "$tree" -m "meta amended $(date -u +%s)" -p HEAD)"
-    git tag -f v1.0.1 "$base"
-    from=$base
+    require_tag v1.0.1
+    from="$(git rev-parse 'refs/tags/v1.0.1^{}')"
+    tree="$(git rev-parse "${from}^{tree}")"
+    new="$(git commit-tree "$tree" -m "meta amended $(date -u +%s)" -p "$from")"
     git tag -f v1.0.1 "$new"
     stage_action "$pattern" "v1.0.1" "$from" "$new"
     ;;
-  lightweight_annotated_roundtrip)
-    # Lightweight → annotated → lightweight again. Two ledger rows.
-    c="$(make_commit "lw/ann" "lw-ann-${RANDOM}")"
-    delete_tag v2
-    git tag v2 "$c"
+  lightweight_to_annotated)
+    # Half of former pattern 3: leave annotated until the next rotation.
+    require_tag v2
     if is_annotated_tag v2; then
-      echo "expected lightweight tag v2" >&2
+      echo "expected lightweight tag v2 before lightweight_to_annotated" >&2
       exit 1
     fi
     from="$(git rev-parse refs/tags/v2)"
+    c="$(git rev-parse 'refs/tags/v2^{}')"
     delete_tag v2
     git tag -a v2 -m "annotated canary" "$c"
     if ! is_annotated_tag v2; then
@@ -144,40 +175,55 @@ case "$pattern" in
     fi
     to="$(git rev-parse refs/tags/v2)"
     stage_action "$pattern" "v2" "$from" "$to"
-    # Test hook: fail after the first staged row so rollback can be asserted.
     if [[ "${CANARY_FAIL_AFTER_FIRST_STAGE:-}" == "1" ]]; then
       echo "injected failure after first stage_action" >&2
       false
     fi
+    ;;
+  annotated_to_lightweight)
+    require_tag v2
+    if ! is_annotated_tag v2; then
+      echo "expected annotated tag v2 before annotated_to_lightweight" >&2
+      exit 1
+    fi
+    from="$(git rev-parse refs/tags/v2)"
+    c="$(git rev-parse 'refs/tags/v2^{}')"
     delete_tag v2
     git tag v2 "$c"
     if is_annotated_tag v2; then
-      echo "expected lightweight tag v2 after roundtrip" >&2
+      echo "expected lightweight tag v2 after annotated_to_lightweight" >&2
       exit 1
     fi
-    stage_action "$pattern" "v2" "$to" "$(git rev-parse refs/tags/v2)"
+    stage_action "$pattern" "v2" "$from" "$(git rev-parse refs/tags/v2)"
     ;;
-  delete_recreate)
-    c1="$(make_commit "delete before" "del-${RANDOM}")"
-    git tag -f v3.0.0 "$c1"
-    stage_action "$pattern" "v3.0.0" "$c1" ""
+  delete)
+    # Half of former pattern 4: leave missing until the next rotation.
+    require_tag v3.0.0
+    from="$(git rev-parse 'refs/tags/v3.0.0^{}')"
+    stage_action "$pattern" "v3.0.0" "$from" ""
     delete_tag v3.0.0
     if git rev-parse -q --verify refs/tags/v3.0.0 >/dev/null 2>&1; then
       echo "v3.0.0 should be deleted" >&2
       exit 1
     fi
-    sleep "$DELETE_SLEEP"
+    ;;
+  recreate)
+    if git rev-parse -q --verify refs/tags/v3.0.0 >/dev/null 2>&1; then
+      echo "expected v3.0.0 absent before recreate" >&2
+      exit 1
+    fi
     c2="$(make_commit "recreate after" "rec-${RANDOM}")"
     git tag v3.0.0 "$c2"
     stage_action "$pattern" "v3.0.0" "" "$c2"
     ;;
   batch_exact_to_one)
+    require_tag v9.0.0
+    require_tag v9.0.1
+    require_tag v9.0.2
     t="$(make_commit "batch target" "batch-${RANDOM}")"
     local_tag=""
     for local_tag in v9.0.0 v9.0.1 v9.0.2; do
-      old="$(make_commit "batch ${local_tag} old" "old-${local_tag}-${RANDOM}")"
-      git tag -f "$local_tag" "$old"
-      from=$old
+      from="$(git rev-parse "refs/tags/${local_tag}^{}")"
       git tag -f "$local_tag" "$t"
       stage_action "$pattern" "$local_tag" "$from" "$t"
     done

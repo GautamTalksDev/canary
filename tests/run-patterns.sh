@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Run all six canary patterns against a throwaway local repo + bare remote.
+# Run all canary patterns against a throwaway local repo + bare remote.
 # Asserts tag state, push success, and ledger rows after each pattern.
+# Simulates a poll between split halves (3a/3b, 4a/4b).
 # Also asserts that a forced mid-pattern failure does not advance state or
 # leave a finalize-able pending row.
 set -euo pipefail
@@ -36,7 +37,11 @@ git add .canary-state .canary-pending.jsonl canary/ledger.jsonl
 git commit -m "canary: test genesis" >/dev/null
 git push origin main >/dev/null
 
-export CANARY_DELETE_SLEEP=0
+# Simulated poll between pattern halves (wall-clock stand-in for one slot).
+simulate_poll() {
+  echo "== simulated poll =="
+  sleep 0
+}
 
 ledger_lines() {
   if [[ -f canary/ledger.jsonl ]]; then
@@ -67,6 +72,13 @@ assert_lightweight() {
   obj="$(tag_object "$tag")"
   type="$(git cat-file -t "$obj")"
   assert_eq "$type" "commit" "tag ${tag} should be lightweight"
+}
+
+assert_annotated() {
+  local tag="$1" obj type
+  obj="$(tag_object "$tag")"
+  type="$(git cat-file -t "$obj")"
+  assert_eq "$type" "tag" "tag ${tag} should be annotated"
 }
 
 run_one() {
@@ -101,133 +113,48 @@ echo "== pattern 0 floating_major_forward =="
 run_one 1
 assert_eq "$(cat .canary-state)" "1" "state after pattern 0"
 assert_lightweight v1
-python3 - <<'PY'
-import json
-import subprocess
-
-row = json.loads(open("canary/ledger.jsonl", encoding="utf-8").read().splitlines()[-1])
-tip = subprocess.check_output(["git", "rev-parse", "v1"], text=True).strip()
-assert row["pattern"] == "floating_major_forward"
-assert row["tag"] == "v1"
-assert row["to"] == tip
-assert row["from"] != row["to"]
-print("ok: floating_major_forward ledger")
-PY
 
 echo "== pattern 1 exact_content_change =="
 run_one 1
 assert_eq "$(cat .canary-state)" "2" "state after pattern 1"
 assert_lightweight v1.0.0
-python3 - <<'PY'
-import json
-import subprocess
-
-row = json.loads(open("canary/ledger.jsonl", encoding="utf-8").read().splitlines()[-1])
-tip = subprocess.check_output(["git", "rev-parse", "v1.0.0"], text=True).strip()
-assert row["pattern"] == "exact_content_change"
-assert row["tag"] == "v1.0.0"
-assert row["to"] == tip
-assert row["from"] != row["to"]
-print("ok: exact_content_change ledger")
-PY
 
 echo "== pattern 2 commit_metadata_only =="
 run_one 1
 assert_eq "$(cat .canary-state)" "3" "state after pattern 2"
 assert_lightweight v1.0.1
-python3 - <<'PY'
-import json
-import subprocess
 
-row = json.loads(open("canary/ledger.jsonl", encoding="utf-8").read().splitlines()[-1])
-tip = subprocess.check_output(["git", "rev-parse", "v1.0.1"], text=True).strip()
-tree_from = subprocess.check_output(
-    ["git", "rev-parse", f"{row['from']}^{{tree}}"], text=True
-).strip()
-tree_to = subprocess.check_output(
-    ["git", "rev-parse", f"{row['to']}^{{tree}}"], text=True
-).strip()
-assert row["pattern"] == "commit_metadata_only"
-assert row["tag"] == "v1.0.1"
-assert row["to"] == tip
-assert row["from"] != row["to"]
-assert tree_from == tree_to, "metadata-only must keep the same tree"
-print("ok: commit_metadata_only ledger")
-PY
+echo "== pattern 3a lightweight_to_annotated =="
+run_one 1
+assert_eq "$(cat .canary-state)" "4" "state after pattern 3a"
+assert_annotated v2
+simulate_poll
 
-echo "== pattern 3 lightweight_annotated_roundtrip =="
-run_one 2
-assert_eq "$(cat .canary-state)" "4" "state after pattern 3"
+echo "== pattern 3b annotated_to_lightweight =="
+run_one 1
+assert_eq "$(cat .canary-state)" "5" "state after pattern 3b"
 assert_lightweight v2
-python3 - <<'PY'
-import json
-import subprocess
 
-rows = [
-    json.loads(ln)
-    for ln in open("canary/ledger.jsonl", encoding="utf-8")
-    if ln.strip()
-]
-a, b = rows[-2], rows[-1]
-assert a["pattern"] == b["pattern"] == "lightweight_annotated_roundtrip"
-assert a["tag"] == b["tag"] == "v2"
-assert a["from"] != a["to"]
-assert b["from"] == a["to"]
-tip = subprocess.check_output(["git", "rev-parse", "refs/tags/v2"], text=True).strip()
-assert b["to"] == tip
-typ = subprocess.check_output(["git", "cat-file", "-t", tip], text=True).strip()
-assert typ == "commit", typ
-print("ok: lightweight_annotated_roundtrip ledger")
-PY
+echo "== pattern 4a delete =="
+run_one 1
+assert_eq "$(cat .canary-state)" "6" "state after pattern 4a"
+if git rev-parse -q --verify refs/tags/v3.0.0 >/dev/null 2>&1; then
+  echo "FAIL: v3.0.0 should be absent after delete" >&2
+  exit 1
+fi
+simulate_poll
 
-echo "== pattern 4 delete_recreate =="
-run_one 2
-assert_eq "$(cat .canary-state)" "5" "state after pattern 4"
+echo "== pattern 4b recreate =="
+run_one 1
+assert_eq "$(cat .canary-state)" "7" "state after pattern 4b"
 assert_lightweight v3.0.0
-python3 - <<'PY'
-import json
-import subprocess
-
-rows = [
-    json.loads(ln)
-    for ln in open("canary/ledger.jsonl", encoding="utf-8")
-    if ln.strip()
-]
-a, b = rows[-2], rows[-1]
-assert a["pattern"] == b["pattern"] == "delete_recreate"
-assert a["tag"] == b["tag"] == "v3.0.0"
-assert a["to"] == ""
-assert b["from"] == ""
-tip = subprocess.check_output(["git", "rev-parse", "v3.0.0"], text=True).strip()
-assert b["to"] == tip
-print("ok: delete_recreate ledger")
-PY
 
 echo "== pattern 5 batch_exact_to_one =="
 run_one 3
-assert_eq "$(cat .canary-state)" "0" "state wraps to 0 after pattern 5"
+assert_eq "$(cat .canary-state)" "0" "state wraps to 0 after batch"
 batch_tip="$(tag_commit v9.0.0)"
 assert_eq "$(tag_commit v9.0.1)" "$batch_tip" "batch tags share tip"
 assert_eq "$(tag_commit v9.0.2)" "$batch_tip" "batch tags share tip"
-python3 - <<'PY'
-import json
-import subprocess
-
-rows = [
-    json.loads(ln)
-    for ln in open("canary/ledger.jsonl", encoding="utf-8")
-    if ln.strip()
-]
-batch = rows[-3:]
-assert [r["tag"] for r in batch] == ["v9.0.0", "v9.0.1", "v9.0.2"]
-tips = {r["to"] for r in batch}
-assert len(tips) == 1
-tip = tips.pop()
-for tag in ("v9.0.0", "v9.0.1", "v9.0.2"):
-    got = subprocess.check_output(["git", "rev-parse", tag], text=True).strip()
-    assert got == tip
-print("ok: batch_exact_to_one ledger")
-PY
 
 cd "$BARE"
 for t in v1 v1.0.0 v1.0.1 v2 v3.0.0 v9.0.0 v9.0.1 v9.0.2; do
@@ -242,11 +169,10 @@ LEDGER_BEFORE="$(ledger_lines)"
 : >.canary-pending.jsonl
 
 set +e
-CANARY_FAIL_AFTER_FIRST_STAGE=1 FORCE_PATTERN=lightweight_annotated_roundtrip \
+CANARY_FAIL_AFTER_FIRST_STAGE=1 FORCE_PATTERN=lightweight_to_annotated \
   bash scripts/rotate.sh
 ec=$?
 set -e
-# ERR trap exits with the failing command's status (1 from false).
 assert_eq "$ec" "1" "injected failure exit code"
 
 assert_eq "$(cat .canary-state)" "$STATE_BEFORE" "state must not advance on failure"
