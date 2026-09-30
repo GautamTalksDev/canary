@@ -1,3 +1,5 @@
 {"pattern":"floating_major_forward","tag":"v1","from":"66aae86863d331928fb18b55bd815ff02c113cc8","to":"33e99758d60d108c9a769f737aabc9dcb827efde","performed_at":"2026-09-28T20:55:24.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"f77c8881c16024f91fcfe926103e94c2e0a23a1b","to":"1826be9ea6112d01804e9485c67765150bcb46f6","performed_at":"2026-09-29T05:51:30.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"35ed35c240996954ab8b9f22719900ced4cb7645","to":"b656356f2ec87be240d7df598d9e8048b795ff0e","performed_at":"2026-09-29T14:53:17.000Z"}
+{"pattern":"lightweight_annotated_roundtrip","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"374c25ca67ad21056d434fbc4a25225463a695ed","performed_at":"2026-09-30T04:17:41.000Z"}
+{"pattern":"lightweight_annotated_roundtrip","tag":"v2","from":"374c25ca67ad21056d434fbc4a25225463a695ed","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-09-30T04:17:41.000Z"}
