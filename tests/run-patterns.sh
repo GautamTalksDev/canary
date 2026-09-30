@@ -88,6 +88,12 @@ run_one() {
   bash scripts/rotate.sh
   git push origin HEAD:main
   git push origin --tags --force
+  # Mirror workflow: propagate local tag deletions to the bare remote.
+  for t in v1 v1.0.0 v1.0.1 v2 v3.0.0 v9.0.0 v9.0.1 v9.0.2; do
+    if ! git rev-parse -q --verify "refs/tags/${t}" >/dev/null 2>&1; then
+      git push origin ":refs/tags/${t}" || true
+    fi
+  done
   bash scripts/finalize-ledger.sh
   after="$(ledger_lines)"
   assert_eq "$((after - before))" "$expect_rows" "ledger rows appended"

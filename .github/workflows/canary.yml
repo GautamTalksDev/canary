@@ -59,6 +59,13 @@ jobs:
           git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push origin HEAD:main
           git push origin --tags --force
+          # --tags does not delete. Propagate local absences for the canary set
+          # so delete/recreate halves are visible to the poller.
+          for t in v1 v1.0.0 v1.0.1 v2 v3.0.0 v9.0.0 v9.0.1 v9.0.2; do
+            if ! git rev-parse -q --verify "refs/tags/${t}" >/dev/null 2>&1; then
+              git push origin ":refs/tags/${t}" || true
+            fi
+          done
 
       - name: Record performed_at after push
         run: bash scripts/finalize-ledger.sh
