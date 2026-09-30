@@ -17,18 +17,21 @@ performed="$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")"
 mkdir -p canary
 touch "$LEDGER"
 python3 - "$PENDING" "$LEDGER" "$performed" <<'PY'
-import json, sys
+import json
+import sys
+
 pending_path, ledger_path, performed = sys.argv[1:4]
-with open(pending_path) as f:
+with open(pending_path, encoding="utf-8") as f:
     lines = [ln.strip() for ln in f if ln.strip()]
-with open(ledger_path, "a") as out:
+with open(ledger_path, "a", encoding="utf-8") as out:
     for ln in lines:
         row = json.loads(ln)
         row["performed_at"] = performed
         out.write(json.dumps(row, separators=(",", ":")) + "\n")
 PY
 
-: > "$PENDING"
+: >"$PENDING"
 git add "$LEDGER" "$PENDING"
-git commit -m "canary: ledger performed_at=${performed}" || true
+git commit -m "canary: ledger performed_at=${performed}"
 git push origin HEAD:main
+echo "ledger stamped performed_at=${performed}"

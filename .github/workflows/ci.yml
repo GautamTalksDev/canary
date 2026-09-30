@@ -1,0 +1,43 @@
+# CI for the canary harness: shellcheck + all six rotation patterns.
+#
+# EVERY action is pinned by full 40-character commit SHA with a trailing
+# version comment.
+
+name: ci
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: install shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+      - name: shellcheck scripts and tests
+        run: |
+          set -euo pipefail
+          shellcheck -x scripts/*.sh tests/*.sh
+
+  patterns:
+    name: patterns
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: run all six patterns
+        run: bash tests/run-patterns.sh

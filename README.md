@@ -47,3 +47,16 @@ Manual runs remain available via Actions → canary-rotate → Run workflow.
 
 Each action appends `{pattern, tag, from, to, performed_at}` to
 `canary/ledger.jsonl` in this repository.
+
+## Tests
+
+```bash
+# Requires shellcheck on PATH (CI installs it).
+shellcheck -x scripts/*.sh tests/*.sh
+bash tests/run-patterns.sh
+```
+
+`tests/run-patterns.sh` builds a throwaway repo and bare remote, runs all six
+patterns in order, checks tag state and ledger rows after each, and asserts a
+forced mid-pattern failure does not advance `.canary-state` or leave a
+pending ledger row.
