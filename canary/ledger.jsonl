@@ -5,3 +5,4 @@
 {"pattern":"lightweight_annotated_roundtrip","tag":"v2","from":"374c25ca67ad21056d434fbc4a25225463a695ed","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-09-30T04:17:41.000Z"}
 {"pattern":"delete_recreate","tag":"v3.0.0","from":"0985b310fb060f3f8aa9f33ab264561ca6786714","to":"","performed_at":"2026-09-30T04:18:35.000Z"}
 {"pattern":"delete_recreate","tag":"v3.0.0","from":"","to":"ca73a908125d15c79265e65fcb08c989849d547a","performed_at":"2026-09-30T04:18:35.000Z"}
+{"pattern":"delete","tag":"v3.0.0","from":"ca73a908125d15c79265e65fcb08c989849d547a","to":"","performed_at":"2026-09-30T04:51:14.000Z"}
