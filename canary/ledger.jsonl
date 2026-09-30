@@ -3,3 +3,5 @@
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"35ed35c240996954ab8b9f22719900ced4cb7645","to":"b656356f2ec87be240d7df598d9e8048b795ff0e","performed_at":"2026-09-29T14:53:17.000Z"}
 {"pattern":"lightweight_annotated_roundtrip","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"374c25ca67ad21056d434fbc4a25225463a695ed","performed_at":"2026-09-30T04:17:41.000Z"}
 {"pattern":"lightweight_annotated_roundtrip","tag":"v2","from":"374c25ca67ad21056d434fbc4a25225463a695ed","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-09-30T04:17:41.000Z"}
+{"pattern":"delete_recreate","tag":"v3.0.0","from":"0985b310fb060f3f8aa9f33ab264561ca6786714","to":"","performed_at":"2026-09-30T04:18:35.000Z"}
+{"pattern":"delete_recreate","tag":"v3.0.0","from":"","to":"ca73a908125d15c79265e65fcb08c989849d547a","performed_at":"2026-09-30T04:18:35.000Z"}
