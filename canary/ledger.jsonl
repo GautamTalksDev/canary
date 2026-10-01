@@ -15,3 +15,6 @@
 {"pattern":"batch_exact_to_one","tag":"v9.0.0","from":"72abd181f8412393aa1d0edd4792c9a9a7333c53","to":"5f7797a750e27645b21d80f89c20e006e9f8da65","performed_at":"2026-10-01T01:57:13.000Z"}
 {"pattern":"batch_exact_to_one","tag":"v9.0.1","from":"72abd181f8412393aa1d0edd4792c9a9a7333c53","to":"5f7797a750e27645b21d80f89c20e006e9f8da65","performed_at":"2026-10-01T01:57:13.000Z"}
 {"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"72abd181f8412393aa1d0edd4792c9a9a7333c53","to":"5f7797a750e27645b21d80f89c20e006e9f8da65","performed_at":"2026-10-01T01:57:13.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.0","from":"5f7797a750e27645b21d80f89c20e006e9f8da65","to":"9501ea4aa193609399ba0e66a5248432246ad445","performed_at":"2026-10-01T02:16:54.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.1","from":"5f7797a750e27645b21d80f89c20e006e9f8da65","to":"9501ea4aa193609399ba0e66a5248432246ad445","performed_at":"2026-10-01T02:16:54.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"5f7797a750e27645b21d80f89c20e006e9f8da65","to":"9501ea4aa193609399ba0e66a5248432246ad445","performed_at":"2026-10-01T02:16:54.000Z"}
