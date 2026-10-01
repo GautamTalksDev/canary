@@ -83,7 +83,7 @@ assert_annotated() {
 
 run_one() {
   local expect_rows="$1"
-  local before after pending_rows pattern_rows
+  local before after pending_rows
   before="$(ledger_lines)"
   bash scripts/rotate.sh
   git push origin HEAD:main
