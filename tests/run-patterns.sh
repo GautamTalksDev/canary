@@ -98,7 +98,7 @@ run_one() {
   after="$(ledger_lines)"
   pending_rows="$(grep -c . .canary-pending.jsonl 2>/dev/null || true)"
   assert_eq "${pending_rows:-0}" "0" "pending must be empty after finalize"
-  pattern_rows="$(python3 - "$before" "$after" "$expect_rows" <<'PY'
+  python3 - "$before" "$after" "$expect_rows" <<'PY'
 import json
 import sys
 
@@ -116,11 +116,7 @@ assert len(pattern_rows) == expect, (
 )
 creations = len(new) - len(pattern_rows)
 print(f"ok: {len(pattern_rows)} pattern row(s) stamped (+{creations} creation)")
-print(len(pattern_rows))
 PY
-)"
-  # python prints the count on the last line; ignore for assert_eq of exit
-  :
 }
 
 echo "== pattern 0 floating_major_forward =="
