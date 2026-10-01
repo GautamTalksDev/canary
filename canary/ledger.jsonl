@@ -9,3 +9,9 @@
 {"kind":"correction","corrects_performed_at":"2026-09-30T04:51:14.000Z","pattern":"delete","tag":"v3.0.0","correction_kind":"manual_intervention","reason":"remote delete happened later by hand after the push bug; performed_at is not the true remote deletion time and must not enter latency figures"}
 {"pattern":"recreate","tag":"v3.0.0","from":"","to":"39a2d2286acfad73a9afad1e05d9e425e55f65a6","performed_at":"2026-09-30T05:13:06.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"1826be9ea6112d01804e9485c67765150bcb46f6","to":"7272eeb121bd005fd0ec28b7b245c764b964cb44","performed_at":"2026-10-01T00:41:28.000Z"}
+{"pattern":"creation","tag":"v9.0.0","from":"","to":"72abd181f8412393aa1d0edd4792c9a9a7333c53","performed_at":"2026-10-01T01:57:13.000Z"}
+{"pattern":"creation","tag":"v9.0.1","from":"","to":"72abd181f8412393aa1d0edd4792c9a9a7333c53","performed_at":"2026-10-01T01:57:13.000Z"}
+{"pattern":"creation","tag":"v9.0.2","from":"","to":"72abd181f8412393aa1d0edd4792c9a9a7333c53","performed_at":"2026-10-01T01:57:13.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.0","from":"72abd181f8412393aa1d0edd4792c9a9a7333c53","to":"5f7797a750e27645b21d80f89c20e006e9f8da65","performed_at":"2026-10-01T01:57:13.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.1","from":"72abd181f8412393aa1d0edd4792c9a9a7333c53","to":"5f7797a750e27645b21d80f89c20e006e9f8da65","performed_at":"2026-10-01T01:57:13.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"72abd181f8412393aa1d0edd4792c9a9a7333c53","to":"5f7797a750e27645b21d80f89c20e006e9f8da65","performed_at":"2026-10-01T01:57:13.000Z"}
