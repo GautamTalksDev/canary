@@ -119,6 +119,12 @@ print(f"ok: {len(pattern_rows)} pattern row(s) stamped (+{creations} creation)")
 PY
 }
 
+echo "== bootstrap-only rotation (creates tags, no pattern) =="
+run_one 0
+assert_eq "$(cat .canary-state)" "0" "state unchanged after bootstrap-only"
+assert_lightweight v1
+assert_lightweight v9.0.0
+
 echo "== pattern 0 floating_major_forward =="
 run_one 1
 assert_eq "$(cat .canary-state)" "1" "state after pattern 0"

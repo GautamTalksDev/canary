@@ -95,6 +95,7 @@ require_tag() {
 # are left alone. v3.0.0 is excluded from per-rotation healing so a deliberate
 # delete half stays deleted until recreate. Each newly created tag is staged as
 # a creation ledger row so canary-score does not treat it as a miss.
+# Prints the number of tags created on stdout (last line) for the caller.
 bootstrap_tags() {
   local c="" tag created=0
   local heal=(v1 v1.0.0 v1.0.1 v2 v9.0.0 v9.0.1 v9.0.2)
@@ -113,11 +114,12 @@ bootstrap_tags() {
     git tag "$tag" "$c"
     stage_action "creation" "$tag" "" "$c"
     created=$((created + 1))
-    echo "bootstrapped missing tag ${tag} at ${c}"
+    echo "bootstrapped missing tag ${tag} at ${c}" >&2
   done
   if [[ "$created" -eq 0 ]]; then
-    echo "bootstrap: all healable canary tags already present"
+    echo "bootstrap: all healable canary tags already present" >&2
   fi
+  echo "$created"
 }
 
 current() {
@@ -137,7 +139,14 @@ current() {
   echo "$idx"
 }
 
-bootstrap_tags
+created="$(bootstrap_tags)"
+# Bootstrap and attack must not share a push: the poller must observe new tags
+# before a pattern moves them (otherwise tips arrive already-moved, listing-only).
+if [[ "$created" -gt 0 ]]; then
+  trap - ERR
+  echo "bootstrap created ${created} tag(s); deferring pattern until next rotation"
+  exit 0
+fi
 
 idx="$(current)"
 pattern="${PATTERNS[$idx]}"
