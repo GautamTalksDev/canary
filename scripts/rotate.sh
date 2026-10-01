@@ -91,25 +91,33 @@ require_tag() {
   fi
 }
 
-# Create the stable tag set once. Patterns never create these.
-# Only runs when v1 is missing (first materialization). Must not recreate
-# v3.0.0 after a deliberate delete half.
+# Create any missing tags from the stable canary set. Idempotent: existing tags
+# are left alone. v3.0.0 is excluded from per-rotation healing so a deliberate
+# delete half stays deleted until recreate. Each newly created tag is staged as
+# a creation ledger row so canary-score does not treat it as a miss.
 bootstrap_tags() {
-  local c
-  if git rev-parse -q --verify refs/tags/v1 >/dev/null 2>&1; then
-    return 0
+  local c="" tag created=0
+  local heal=(v1 v1.0.0 v1.0.1 v2 v9.0.0 v9.0.1 v9.0.2)
+  # True first materialization: also create v3.0.0 once.
+  if ! git rev-parse -q --verify refs/tags/v1 >/dev/null 2>&1 \
+    && ! git rev-parse -q --verify refs/tags/v3.0.0 >/dev/null 2>&1; then
+    heal+=(v3.0.0)
   fi
-  c="$(make_commit "canary bootstrap" "bootstrap-${RANDOM}")"
-  git tag -f v1 "$c"
-  git tag -f v1.0.0 "$c"
-  git tag -f v1.0.1 "$c"
-  delete_tag v2
-  git tag v2 "$c"
-  git tag -f v3.0.0 "$c"
-  git tag -f v9.0.0 "$c"
-  git tag -f v9.0.1 "$c"
-  git tag -f v9.0.2 "$c"
-  echo "bootstrapped pre-existing canary tags at ${c}"
+  for tag in "${heal[@]}"; do
+    if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null 2>&1; then
+      continue
+    fi
+    if [[ -z "$c" ]]; then
+      c="$(make_commit "canary bootstrap" "bootstrap-${RANDOM}")"
+    fi
+    git tag "$tag" "$c"
+    stage_action "creation" "$tag" "" "$c"
+    created=$((created + 1))
+    echo "bootstrapped missing tag ${tag} at ${c}"
+  done
+  if [[ "$created" -eq 0 ]]; then
+    echo "bootstrap: all healable canary tags already present"
+  fi
 }
 
 current() {

@@ -83,7 +83,7 @@ assert_annotated() {
 
 run_one() {
   local expect_rows="$1"
-  local before after pending_rows
+  local before after pending_rows pattern_rows
   before="$(ledger_lines)"
   bash scripts/rotate.sh
   git push origin HEAD:main
@@ -96,14 +96,13 @@ run_one() {
   done
   bash scripts/finalize-ledger.sh
   after="$(ledger_lines)"
-  assert_eq "$((after - before))" "$expect_rows" "ledger rows appended"
   pending_rows="$(grep -c . .canary-pending.jsonl 2>/dev/null || true)"
   assert_eq "${pending_rows:-0}" "0" "pending must be empty after finalize"
-  python3 - "$before" "$after" <<'PY'
+  pattern_rows="$(python3 - "$before" "$after" "$expect_rows" <<'PY'
 import json
 import sys
 
-start, end = map(int, sys.argv[1:3])
+start, end, expect = map(int, sys.argv[1:4])
 with open("canary/ledger.jsonl", encoding="utf-8") as f:
     rows = [json.loads(ln) for ln in f if ln.strip()]
 new = rows[start:end]
@@ -111,8 +110,17 @@ assert len(new) == end - start, (len(new), end - start)
 for row in new:
     assert row.get("performed_at", "").endswith("Z"), row
     assert "pattern" in row and "tag" in row, row
-print(f"ok: {len(new)} ledger row(s) stamped")
+pattern_rows = [r for r in new if r.get("pattern") != "creation"]
+assert len(pattern_rows) == expect, (
+    f"pattern rows got={len(pattern_rows)} want={expect}; all={new}"
+)
+creations = len(new) - len(pattern_rows)
+print(f"ok: {len(pattern_rows)} pattern row(s) stamped (+{creations} creation)")
+print(len(pattern_rows))
 PY
+)"
+  # python prints the count on the last line; ignore for assert_eq of exit
+  :
 }
 
 echo "== pattern 0 floating_major_forward =="
