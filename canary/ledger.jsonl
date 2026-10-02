@@ -24,3 +24,4 @@
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"549990ab396ef38a4feaba990473c3d66fb26be7","performed_at":"2026-10-01T16:17:53.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"549990ab396ef38a4feaba990473c3d66fb26be7","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-01T20:17:40.000Z"}
 {"pattern":"delete","tag":"v3.0.0","from":"39a2d2286acfad73a9afad1e05d9e425e55f65a6","to":"","performed_at":"2026-10-02T00:17:40.000Z"}
+{"pattern":"recreate","tag":"v3.0.0","from":"","to":"624e37c02fb61ad30bfc37d2246d8a585385a41e","performed_at":"2026-10-02T04:17:43.000Z"}
