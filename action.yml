@@ -1,5 +1,5 @@
 name: Canary
-description: Refledger detection canary — not for production use
+description: Refledger detection canary ,  not for production use
 runs:
   using: composite
   steps:

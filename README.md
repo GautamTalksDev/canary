@@ -1,4 +1,4 @@
-# Canary — deliberately moved tags for detection measurement
+# Canary , deliberately moved tags for detection measurement
 
 Public repository: **[`GautamTalksDev/canary`](https://github.com/GautamTalksDev/canary)**.
 
@@ -14,8 +14,8 @@ main Refledger repo:
 
 ```bash
 cargo run --manifest-path tools/canary-score/Cargo.toml -- \
-  --ledger https://raw.githubusercontent.com/GautamTalksDev/canary/main/canary/ledger.jsonl \
-  --log-dir data/log
+ --ledger https://raw.githubusercontent.com/GautamTalksDev/canary/main/canary/ledger.jsonl \
+ --log-dir data/log
 ```
 
 (`--ledger` also accepts a local path.) That writes `docs/DETECTION.md` in the
@@ -48,7 +48,7 @@ Manual runs remain available via Actions → canary-rotate → Run workflow.
 8. batch: 3 Exact tags moved to one commit
 
 Every pattern moves **pre-existing** tags created once at bootstrap. Creating
-a tag is not a move and is not scored as a miss. Patterns 4–7 are split so
+a tag is not a move and is not scored as a miss. Patterns 4-7 are split so
 each intermediate state survives at least one 5-minute poll.
 
 Each action appends `{pattern, tag, from, to, performed_at}` to
