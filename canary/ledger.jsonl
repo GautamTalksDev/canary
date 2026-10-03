@@ -34,3 +34,4 @@
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"7c49edd5dc50fcd492009beb8792eb3ecd5c2f75","performed_at":"2026-10-02T21:45:12.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"7c49edd5dc50fcd492009beb8792eb3ecd5c2f75","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-03T00:17:41.000Z"}
 {"pattern":"delete","tag":"v3.0.0","from":"624e37c02fb61ad30bfc37d2246d8a585385a41e","to":"","performed_at":"2026-10-03T04:17:39.000Z"}
+{"pattern":"recreate","tag":"v3.0.0","from":"","to":"eb39091ee09fe6baefa15fa6442c330fb337ef12","performed_at":"2026-10-03T08:17:42.000Z"}
