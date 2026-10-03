@@ -66,3 +66,12 @@ bash tests/run-patterns.sh
 patterns in order, checks tag state and ledger rows after each, and asserts a
 forced mid-pattern failure does not advance `.canary-state` or leave a
 pending ledger row.
+
+## License
+
+Code in this repository is Apache 2.0. See [`LICENSE`](LICENSE).
+
+## Security
+
+Report a vulnerability privately. One maintainer, no on-call rotation.
+See [`SECURITY.md`](SECURITY.md).
