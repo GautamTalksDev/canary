@@ -51,3 +51,4 @@
 {"pattern":"floating_major_forward","tag":"v1","from":"b20f145eb6acf2538fb35d165cbcb635152af6c6","to":"58d136ea03e2865345ea37afc0eef442f34416de","performed_at":"2026-10-05T00:17:34.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"3536f71b4c2adeed2aa9be24a5938d4b3aba02ff","to":"e7bd0f4a627d7fa248ef59bb653fdccf2206b384","performed_at":"2026-10-05T04:17:56.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"31ecbbeb3e2a90b46f73bcf01fbf79ef9febb5f7","to":"29a2a1c29502de9fd5b285ba4eebaf461fc5e209","performed_at":"2026-10-05T08:17:36.000Z"}
+{"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"0561ea9cf65defc40017854680c10c9865bb4bba","performed_at":"2026-10-05T12:17:37.000Z"}
