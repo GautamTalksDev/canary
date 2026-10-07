@@ -62,3 +62,4 @@
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"e7bd0f4a627d7fa248ef59bb653fdccf2206b384","to":"3e7e5870d87930c43b6dac27ad700dcea1c6f54f","performed_at":"2026-10-06T16:17:37.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"29a2a1c29502de9fd5b285ba4eebaf461fc5e209","to":"7216085dc157d0e280ca9e71db4e1715a1e155e6","performed_at":"2026-10-06T20:17:36.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"6660824dba161442032c39eaff3038d261d09dfc","performed_at":"2026-10-07T00:17:36.000Z"}
+{"pattern":"annotated_to_lightweight","tag":"v2","from":"6660824dba161442032c39eaff3038d261d09dfc","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-07T04:17:35.000Z"}
