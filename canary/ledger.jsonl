@@ -71,3 +71,4 @@
 {"pattern":"floating_major_forward","tag":"v1","from":"8d4e47f440347cb60e513092483f9e2fc36469bc","to":"42203225f7d7ce0a03e72aa397fa0512ce5f658c","performed_at":"2026-10-07T20:17:37.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"3e7e5870d87930c43b6dac27ad700dcea1c6f54f","to":"977084b63171ff4b8059135ad133e1699977e373","performed_at":"2026-10-08T00:17:34.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"7216085dc157d0e280ca9e71db4e1715a1e155e6","to":"ec1335122bcaedf9a04553c59d49ee4552a4e1d4","performed_at":"2026-10-08T04:17:35.000Z"}
+{"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"38576e60b0ba3c063db774a635105b8f593995bb","performed_at":"2026-10-08T08:17:37.000Z"}
