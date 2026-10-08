@@ -74,3 +74,4 @@
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"38576e60b0ba3c063db774a635105b8f593995bb","performed_at":"2026-10-08T08:17:37.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"38576e60b0ba3c063db774a635105b8f593995bb","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-08T12:17:36.000Z"}
 {"pattern":"delete","tag":"v3.0.0","from":"091ed624b30c3a9b35b4c056034a5b3ea40b3983","to":"","performed_at":"2026-10-08T16:17:37.000Z"}
+{"pattern":"recreate","tag":"v3.0.0","from":"","to":"0ffb76219b7018d2af5ef6d37c1a9ea239bbf75e","performed_at":"2026-10-08T20:17:37.000Z"}
