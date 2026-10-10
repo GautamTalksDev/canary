@@ -83,3 +83,4 @@
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"ec1335122bcaedf9a04553c59d49ee4552a4e1d4","to":"23a4a3a3957e5594b09634d7e769e9c1d7ae304c","performed_at":"2026-10-09T12:17:37.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"d1d84f7f0aa452605ccc373b0c1d920ca7a34c9c","performed_at":"2026-10-09T16:17:46.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"d1d84f7f0aa452605ccc373b0c1d920ca7a34c9c","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-09T20:17:36.000Z"}
+{"pattern":"delete","tag":"v3.0.0","from":"0ffb76219b7018d2af5ef6d37c1a9ea239bbf75e","to":"","performed_at":"2026-10-10T00:17:35.000Z"}
