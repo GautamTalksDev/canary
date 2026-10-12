@@ -100,3 +100,4 @@
 {"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"a8e461c44b19fe83775e8d07032683434799aa0a","to":"e3a7d2d145bf68dcd786218fc580cd4630ba3379","performed_at":"2026-10-11T16:17:38.000Z"}
 {"pattern":"floating_major_forward","tag":"v1","from":"cc909870b8af21f75721340d70ca722e9ae7b23c","to":"fa6fe4ae319646ddc4f20ca92072769db59f81af","performed_at":"2026-10-11T20:17:36.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"402d5639efdc5a76375a348e29cea71837ffc612","to":"d51ef7700d918b45ebce4f639939f5291c05d2d7","performed_at":"2026-10-12T00:17:34.000Z"}
+{"pattern":"commit_metadata_only","tag":"v1.0.1","from":"fd9bbb5064ee53d667e0984cbcc47dfc1eebdb58","to":"3d7b2c817750ee58a287ccb2577b13d473d8cef8","performed_at":"2026-10-12T04:17:35.000Z"}
