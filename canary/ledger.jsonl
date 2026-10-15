@@ -122,3 +122,4 @@
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"79bcd018169cc26ba3ea5be39ff9e8e813f6a40a","to":"b2a3ff5d7f92c136394dfe220e0e35ccc61325e6","performed_at":"2026-10-14T16:17:27.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"021531046ce6132e461f1d54ae60dcafeb8b22e5","to":"47eec8de650cbecc69b0633ffa6250f6f997d4b6","performed_at":"2026-10-14T20:17:25.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"fb9d3389dfa380dfe77341b0ae51b893c60630c1","performed_at":"2026-10-15T00:17:26.000Z"}
+{"pattern":"annotated_to_lightweight","tag":"v2","from":"fb9d3389dfa380dfe77341b0ae51b893c60630c1","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-15T04:17:27.000Z"}
