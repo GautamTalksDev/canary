@@ -128,3 +128,4 @@
 {"pattern":"batch_exact_to_one","tag":"v9.0.0","from":"76daba414d5a4317729dcdf30016903f65a8130b","to":"ac9c85c6af3bed6bf62baa06c154b93fd0b2d374","performed_at":"2026-10-15T16:17:31.000Z"}
 {"pattern":"batch_exact_to_one","tag":"v9.0.1","from":"76daba414d5a4317729dcdf30016903f65a8130b","to":"ac9c85c6af3bed6bf62baa06c154b93fd0b2d374","performed_at":"2026-10-15T16:17:31.000Z"}
 {"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"76daba414d5a4317729dcdf30016903f65a8130b","to":"ac9c85c6af3bed6bf62baa06c154b93fd0b2d374","performed_at":"2026-10-15T16:17:31.000Z"}
+{"pattern":"floating_major_forward","tag":"v1","from":"6d5a5368a9fb8457b915c51fe38a3f7002bcbea5","to":"2dcae3ebf1aa08edcc47bb1baa256556d3332dad","performed_at":"2026-10-15T20:17:27.000Z"}
