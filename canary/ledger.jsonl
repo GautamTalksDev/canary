@@ -152,3 +152,4 @@
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"f75e13e760127b9a7be81fa034cd4a9ec38f2280","to":"47f1e000c2d9873797c26744fae1d41701b7e818","performed_at":"2026-10-18T16:18:04.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"0075828d7067cdf2419b6bd077d180232b5debde","to":"ce65aeb86c14043b186156a865e8c4125868aab9","performed_at":"2026-10-18T20:18:01.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"49f0252be8d1fa711d587848bddb5899c11356d9","performed_at":"2026-10-19T00:18:01.000Z"}
+{"pattern":"annotated_to_lightweight","tag":"v2","from":"49f0252be8d1fa711d587848bddb5899c11356d9","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-19T04:18:04.000Z"}
