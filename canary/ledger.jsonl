@@ -155,3 +155,6 @@
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"49f0252be8d1fa711d587848bddb5899c11356d9","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-19T04:18:04.000Z"}
 {"pattern":"delete","tag":"v3.0.0","from":"d945e36b26f07088811d24e2976ad5e2fcc64a5e","to":"","performed_at":"2026-10-19T08:18:04.000Z"}
 {"pattern":"recreate","tag":"v3.0.0","from":"","to":"1ac3d39cc482e337ca95c9b9851f089821c48274","performed_at":"2026-10-19T12:18:04.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.0","from":"aab406929cf782c6ef396e1d567e8ce8275a539b","to":"d904bb4dbe2ced2393c35f1711df7d72dc1f2664","performed_at":"2026-10-19T16:18:03.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.1","from":"aab406929cf782c6ef396e1d567e8ce8275a539b","to":"d904bb4dbe2ced2393c35f1711df7d72dc1f2664","performed_at":"2026-10-19T16:18:03.000Z"}
+{"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"aab406929cf782c6ef396e1d567e8ce8275a539b","to":"d904bb4dbe2ced2393c35f1711df7d72dc1f2664","performed_at":"2026-10-19T16:18:03.000Z"}
