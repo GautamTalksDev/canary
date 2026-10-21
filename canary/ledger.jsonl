@@ -171,3 +171,4 @@
 {"pattern":"floating_major_forward","tag":"v1","from":"d95a17446568f1447a6e7bd9ef67c09a57e41591","to":"34c341478386726aebac9a2d085ba35c8a7ce04b","performed_at":"2026-10-21T04:18:03.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"c621a1574167b76682938ce13872201b023bfd46","to":"75ce9d3febdc8e175eb001e58974b3f6423dfc12","performed_at":"2026-10-21T08:18:03.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"393b0026aa13cefd891121a8975d533073dd3d10","to":"0d749f10543f2ff6d53b39a067987e51d4a765f8","performed_at":"2026-10-21T12:18:04.000Z"}
+{"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"4e3d090f54488a48682192a10df3b80ef1a5747d","performed_at":"2026-10-21T16:18:06.000Z"}
