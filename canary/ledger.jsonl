@@ -183,3 +183,4 @@
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"0d749f10543f2ff6d53b39a067987e51d4a765f8","to":"7618bef6852f524afb2f95cfe8d33a22ce678dea","performed_at":"2026-10-22T20:18:32.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"17ca4ace538cfaabcece59a4732ebf946e63a265","performed_at":"2026-10-23T00:18:03.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"17ca4ace538cfaabcece59a4732ebf946e63a265","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-23T04:18:01.000Z"}
+{"pattern":"delete","tag":"v3.0.0","from":"a1d789b1711163fdb781ddcca46e16fc00bcfed8","to":"","performed_at":"2026-10-23T08:18:04.000Z"}
