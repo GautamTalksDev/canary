@@ -194,3 +194,4 @@
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"f2bd407720ddaa20873c7d31006eb5e7fd8cbf86","performed_at":"2026-10-24T08:18:01.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"f2bd407720ddaa20873c7d31006eb5e7fd8cbf86","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-10-24T12:18:03.000Z"}
 {"pattern":"delete","tag":"v3.0.0","from":"25d76773aa0561302d9b04970cea9fd72291e638","to":"","performed_at":"2026-10-24T16:18:03.000Z"}
+{"pattern":"recreate","tag":"v3.0.0","from":"","to":"38c8fe8a15b86a3d56543787ee2fe3320dec537e","performed_at":"2026-10-24T20:18:03.000Z"}
