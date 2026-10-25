@@ -198,3 +198,4 @@
 {"pattern":"batch_exact_to_one","tag":"v9.0.0","from":"348254bc6e2bfe7c517957e86d95e52cc7406047","to":"e52a6ff35b72790077fa9d41fa2651f25a751cc5","performed_at":"2026-10-25T00:18:03.000Z"}
 {"pattern":"batch_exact_to_one","tag":"v9.0.1","from":"348254bc6e2bfe7c517957e86d95e52cc7406047","to":"e52a6ff35b72790077fa9d41fa2651f25a751cc5","performed_at":"2026-10-25T00:18:03.000Z"}
 {"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"348254bc6e2bfe7c517957e86d95e52cc7406047","to":"e52a6ff35b72790077fa9d41fa2651f25a751cc5","performed_at":"2026-10-25T00:18:03.000Z"}
+{"pattern":"floating_major_forward","tag":"v1","from":"68880f00558f8fd623002f42f9c75fdf54fa27e5","to":"7c65dec1a81e023d82442870ea8ea5ee3228ccae","performed_at":"2026-10-25T04:20:27.000Z"}
