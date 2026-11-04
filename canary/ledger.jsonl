@@ -273,3 +273,4 @@
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"d1ba6bcafe5be87653505c69434ff9795620559d","to":"5f77f0b351cdc8c32493e5305a226efb40be7931","performed_at":"2026-11-03T20:18:46.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"f02f76904cbabfee66db53cdc07805b78f5ce827","performed_at":"2026-11-04T00:18:04.000Z"}
 {"pattern":"annotated_to_lightweight","tag":"v2","from":"f02f76904cbabfee66db53cdc07805b78f5ce827","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-11-04T04:18:17.000Z"}
+{"pattern":"delete","tag":"v3.0.0","from":"9674cd949bdd5c8b5ce90fe47e03fc22123118c9","to":"","performed_at":"2026-11-04T08:18:02.000Z"}
