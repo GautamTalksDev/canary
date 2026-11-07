@@ -300,3 +300,4 @@
 {"pattern":"batch_exact_to_one","tag":"v9.0.2","from":"3165b4f65026d72fe40b282d2bb8956437e96c82","to":"59de56f2510a3357d1f3bc21bda1e57de1d81ad3","performed_at":"2026-11-07T08:18:02.000Z"}
 {"pattern":"floating_major_forward","tag":"v1","from":"5aeebeeb624a96c3846e6722fa2bef27461c6228","to":"a12b4e2e305a80434ce16eae50de71a7aa8f7bda","performed_at":"2026-11-07T12:18:03.000Z"}
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"4082e358f97b20b724bbcb287e6795e625be4935","to":"218d0b51a8faf56c523dd6e14fc66498d40c489b","performed_at":"2026-11-07T16:18:02.000Z"}
+{"pattern":"commit_metadata_only","tag":"v1.0.1","from":"eca661f451129efa00a56afc4129a294379602b7","to":"f7a1bfaca9fbd49301da9bfdab11ddab59cafe59","performed_at":"2026-11-07T20:18:02.000Z"}
