@@ -302,3 +302,4 @@
 {"pattern":"exact_content_change","tag":"v1.0.0","from":"4082e358f97b20b724bbcb287e6795e625be4935","to":"218d0b51a8faf56c523dd6e14fc66498d40c489b","performed_at":"2026-11-07T16:18:02.000Z"}
 {"pattern":"commit_metadata_only","tag":"v1.0.1","from":"eca661f451129efa00a56afc4129a294379602b7","to":"f7a1bfaca9fbd49301da9bfdab11ddab59cafe59","performed_at":"2026-11-07T20:18:02.000Z"}
 {"pattern":"lightweight_to_annotated","tag":"v2","from":"f77ccacd8e1ae035fba46dd24456469832ea7c36","to":"bb3d06f0c04be6d0d44b9f2d4f211e5892c95fd9","performed_at":"2026-11-08T00:18:01.000Z"}
+{"pattern":"annotated_to_lightweight","tag":"v2","from":"bb3d06f0c04be6d0d44b9f2d4f211e5892c95fd9","to":"f77ccacd8e1ae035fba46dd24456469832ea7c36","performed_at":"2026-11-08T04:18:04.000Z"}
